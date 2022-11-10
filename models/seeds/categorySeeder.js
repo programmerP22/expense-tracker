@@ -1,14 +1,10 @@
-const express = require('express')
 const mongoose = require('mongoose')
-// const Category = require('../category')
-// const user = require('../user')
-
+const Category = require('../category')
+const categoryList = require('./category.json')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-
-const app = express()
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -19,16 +15,11 @@ db.on('error', () => {
 })
 
 db.once('open', () => {
-  console.log('mongodb connected!')
-})
-
-
-
-app.get('/', (req, res) => {
-  res.send('hello')
-})
-
-app.listen('3000', () => {
-  console.log('App is running on http://localhost:3000')
+  Category.create(categoryList)
+    .then(() => {
+      console.log('category seeds created!')
+      return process.exit()
+    })
+    .catch(error => console.log(error))
 })
 
