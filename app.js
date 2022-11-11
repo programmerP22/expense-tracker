@@ -36,30 +36,54 @@ app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
-
 app.get('/', (req, res) => {
+  const reqs = req.query
+  console.log(reqs)
+
+  const categoryId = req.query.categoryId
   Category.find()
   .lean()
   .then((data) => {
     const categoryList = data
-    Record.find()
-      .lean()
-      .sort({ date: 'desc' })
-      .then((records) => {
-        let totalAmount = 0
-        records.forEach(record => {
-          totalAmount += record.amount
-          record.date = dayjs(record.date).format('YYYY-MM-DD')
-          record.icon = categoryList.find(category => category._id.toString() === record.categoryId.toString()).icon
-        });
-        totalAmount = totalAmount.toString()
-        res.render('index', { records, totalAmount })
-      }) 
-
-
+    if (!categoryId){
+      Record.find()
+        .lean()
+        .sort({ date: 'desc' })
+        .then((records) => {
+          let totalAmount = 0
+          records.forEach(record => {
+            totalAmount += record.amount
+            record.date = dayjs(record.date).format('YYYY-MM-DD')
+            record.icon = categoryList.find(category => category._id.toString() === record.categoryId.toString()).icon
+          });
+          totalAmount = totalAmount.toString()
+          res.render('index', { records, totalAmount, categoryList })
+        }) 
+    } else {
+      // sort function
+      let categoryType =''
+      Record.find({ categoryId })
+        .lean()
+        .sort({ date: 'desc' })
+        .then((records) => {
+          let totalAmount = 0
+          records.forEach(record => {
+            totalAmount += record.amount
+            record.date = dayjs(record.date).format('YYYY-MM-DD')
+            record.icon = categoryList.find(category => category._id.toString() === record.categoryId.toString()).icon
+            categoryType = categoryList.find(category => category._id.toString() === record.categoryId.toString()).name
+          });
+          totalAmount = totalAmount.toString()
+          res.render('index', { records, totalAmount, categoryList, categoryType})
+        }) 
+    }
   }) 
   .catch(error => console.error(error)) 
 })
+
+
+
+
 
 
 

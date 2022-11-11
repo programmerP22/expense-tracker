@@ -10,15 +10,22 @@
       <div class="mt-4">
         <div class="dropdown">
           <button class="btn btn-outline-secondary dropdown-toggle d-flex justify-content-between align-items-center" style="width: 20rem;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            類別   
+            {{#if categoryType}}
+              {{categoryType}}
+            {{else}}
+            請選擇類別
+            {{/if}} 
           </button>
           <ul class="dropdown-menu">
-            {{#each categories}}
-            <li><a class="dropdown-item" href="#">Action</a></li>
+            {{#each categoryList}}
+            <form action="/">
+            <li><button href="/" type="submit" class="dropdown-item" name="categoryId" value="{{this._id}}">{{this.name}}</button></li>
+            </form>
             {{/each}}
-            {{!-- <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-            <li><a class="dropdown-item" href="#">Separated link</a></li> --}}
+            <form action="/">
+              <li><button href="/" type="submit" class="dropdown-item" name="categoryId" value="">全部</button>
+              </li>
+            </form>
           </ul>
         </div>
       </div>
