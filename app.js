@@ -82,10 +82,25 @@ app.get('/', (req, res) => {
 })
 
 
+app.get('/records/new', (req, res) => {
+  Category.find()
+    .lean()
+    .then((data) => {   
+      const categoryList = data    
+      return res.render('new', { categoryList })
+    })
+})
 
 
-
-
+//要再改userId的設定
+app.post('/records', (req, res) => {
+  const newRecord = req.body
+  console.log(newRecord)
+  newRecord.userId = "636e7dd337bf29d3eea1c3f8"
+  Record.create(newRecord)
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
+})
 
 app.listen('3000', () => {
   console.log('App is running on http://localhost:3000')
