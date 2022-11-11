@@ -7,9 +7,6 @@ const exphbs = require('express-handlebars');
 const Category = require('./models/category')
 const User = require('./models/user')
 
-
-
-
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
