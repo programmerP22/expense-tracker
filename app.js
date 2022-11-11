@@ -1,8 +1,13 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars');
-// const Category = require('../category')
-// const user = require('../user')
+
+
+
+const Category = require('./models/category')
+const User = require('./models/user')
+
+
 
 
 if (process.env.NODE_ENV !== 'production') {
@@ -29,6 +34,7 @@ db.once('open', () => {
 app.get('/', (req, res) => {
   res.render('index')
 })
+
 
 app.listen('3000', () => {
   console.log('App is running on http://localhost:3000')
