@@ -42,7 +42,7 @@
       <div class="border" style="border-color: grey; width: 30rem;">
 
         {{#each records}}
-        <div class="row d-flex flex-row align-items-center mx-0 px-1 gx-0" style="height: 3rem;">
+        <div class="row d-flex flex-row align-items-center mx-0 px-1 gx-0" style="height: 3rem; {{#if this.background }}background: #D4D4D4;{{/if}}">
           <div class="col-1 d-flex justify-content-center">
             <i class="{{this.icon}} fa-2x"></i>
           </div>

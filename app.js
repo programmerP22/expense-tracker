@@ -37,7 +37,7 @@ app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-
+//home page
 app.get('/', (req, res) => {
   const categoryId = req.query.categoryId
   Category.find()
@@ -50,11 +50,23 @@ app.get('/', (req, res) => {
         .sort({ date: 'desc' })
         .then((records) => {
           let totalAmount = 0
-          records.forEach(record => {
+
+          // records.forEach(record => {
+          //   totalAmount += record.amount
+          //   record.date = dayjs(record.date).format('YYYY-MM-DD')
+          //   record.icon = categoryList.find(category => category._id.toString() === record.categoryId.toString()).icon
+          // });
+          records = records.map((record, recordIndex) => {
             totalAmount += record.amount
             record.date = dayjs(record.date).format('YYYY-MM-DD')
             record.icon = categoryList.find(category => category._id.toString() === record.categoryId.toString()).icon
-          });
+            if(recordIndex % 2 === 0) {
+              record.background = true
+            }
+            return record
+          })
+
+
           totalAmount = totalAmount.toString()
           res.render('index', { records, totalAmount, categoryList })
         }) 
@@ -66,12 +78,23 @@ app.get('/', (req, res) => {
         .sort({ date: 'desc' })
         .then((records) => {
           let totalAmount = 0
-          records.forEach(record => {
+          // records.forEach((record, recordIndex) => {
+          //   totalAmount += record.amount
+          //   record.date = dayjs(record.date).format('YYYY-MM-DD')
+          //   record.icon = categoryList.find(category => category._id.toString() === record.categoryId.toString()).icon
+          //   categoryType = categoryList.find(category => category._id.toString() === record.categoryId.toString()).name
+          // });
+
+          records = records.map((record, recordIndex) => {
             totalAmount += record.amount
             record.date = dayjs(record.date).format('YYYY-MM-DD')
             record.icon = categoryList.find(category => category._id.toString() === record.categoryId.toString()).icon
             categoryType = categoryList.find(category => category._id.toString() === record.categoryId.toString()).name
-          });
+            if (recordIndex % 2 === 0) {
+              record.background = true
+            }
+            return record
+          })
           totalAmount = totalAmount.toString()
           res.render('index', { records, totalAmount, categoryList, categoryType})
         }) 
@@ -148,6 +171,16 @@ app.delete('/records/:id', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
+
+
+
+// users
+app.get('/login', (req, res) => {
+  res.render('login')
+})
+
+
+
 
 
 
