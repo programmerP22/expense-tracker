@@ -4,19 +4,23 @@ const User = require('../../models/user')
 const passport = require('passport')
 const bcrypt = require('bcryptjs')
 
+//login page
 router.get('/login', (req, res) => {
   res.render('login')
 })
 
+//login authentication
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/users/login'
 }))
 
+//register page
 router.get('/register', (req, res) => {
   res.render('register')
 })
 
+//register user
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
   const errors = []
@@ -35,7 +39,6 @@ router.post('/register', (req, res) => {
       confirmPassword
     })
   }
-
   User.findOne({ email })
     .then(user => {
       if (user) {
@@ -48,7 +51,6 @@ router.post('/register', (req, res) => {
           confirmPassword
         })
       }
-      // 如果還沒註冊：寫入資料庫
       return bcrypt
         .genSalt(10)
         .then(salt => bcrypt.hash(password, salt))
@@ -68,6 +70,7 @@ router.post('/register', (req, res) => {
     .catch(err => console.log(err))
 })
 
+//logout
 router.get('/logout', (req, res) => {
   req.logout()
   req.flash('success_msg', '你已經成功登出。')

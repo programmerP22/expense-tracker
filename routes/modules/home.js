@@ -32,7 +32,6 @@ router.get('/', (req, res) => {
           })
       } else {
         // sort function
-
         let categoryType = ''
         Promise.all([
           Category.find({_id: categoryId})
@@ -60,27 +59,6 @@ router.get('/', (req, res) => {
               res.render('index', { records, totalAmount, categoryList, categoryType })
             })
         })
-
-
-
-        // Record.find({ categoryId, userId })
-        //   .lean()
-        //   .sort({ date: 'desc' })
-        //   .then((records) => {
-        //     let totalAmount = 0
-        //     records = records.map((record, recordIndex) => {
-        //       totalAmount += record.amount
-        //       record.date = dayjs(record.date).format('YYYY-MM-DD')
-        //       record.icon = categoryList.find(category => category._id.toString() === record.categoryId.toString()).icon
-        //       categoryType = categoryList.find(category => category._id.toString() === categoryId).name
-        //       if (recordIndex % 2 === 0) {
-        //         record.background = true
-        //       }
-        //       return record
-        //     })
-        //     totalAmount = totalAmount.toString()
-        //     res.render('index', { records, totalAmount, categoryList, categoryType })
-        //   })
       }
     })
     .catch(error => console.error(error))

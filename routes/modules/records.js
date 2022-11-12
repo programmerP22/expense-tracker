@@ -4,6 +4,7 @@ const Record = require('../../models/record')
 const Category = require('../../models/category')
 const dayjs = require('dayjs')
 
+//create page
 router.get('/new', (req, res) => {
   Category.find()
     .lean()
@@ -12,6 +13,7 @@ router.get('/new', (req, res) => {
     })
 })
 
+//create page
 router.post('/', (req, res) => {
   const userId = req.user._id
   req.body.userId = userId
@@ -20,7 +22,7 @@ router.post('/', (req, res) => {
     .catch(err => console.log(err))
 })
 
-//進到修改頁面
+//edit page
 router.get('/:id/edit', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
@@ -44,7 +46,7 @@ router.get('/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-//修改功能
+//edit function
 router.put('/:id', (req, res) => {
   const _id = req.params.id
   const { name, date, categoryId, amount } = req.body
@@ -54,6 +56,7 @@ router.put('/:id', (req, res) => {
     .catch(err => console.log(err))
 })
 
+//delete function
 router.delete('/:id', (req, res) => {
   const _id = req.params.id
   const userId = req.user._id

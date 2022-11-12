@@ -2,7 +2,6 @@
   <div class="row">
 
     <div class="col-3">
-      {{!-- nothing just for spacing--}}
     </div>
 
     <div class="col-9">
@@ -33,13 +32,13 @@
       {{!-- 總金額 --}}
       <div class="mt-4">
         <div class="d-flex flex-row justify-content-between" style="width: 20rem;">
-          <h3>總金額:</h3> 
-          <h1 style="font-size: 4rem; color: salmon;">{{totalAmount}}</h1>
+          <h5>總金額:</h5> 
+          <h1 style="font-size: 2rem; color: salmon;">{{totalAmount}}</h1>
         </div>
       </div>
 
       {{!-- list --}}
-      <div class="border" style="border-color: grey; width: 30rem;">
+      <div class="" style="border-color: grey; width: 30rem;">
 
         {{#each records}}
         <div class="row d-flex flex-row align-items-center mx-0 px-1 gx-0" style="height: 3rem; {{#if this.background }}background: #D4D4D4;{{/if}}">
@@ -47,19 +46,19 @@
             <i class="{{this.icon}} fa-2x"></i>
           </div>
 
-          <div class="col-6 border d-flex flex-column justify-content-center">
+          <div class="col-6 d-flex flex-column justify-content-center">
             <span style="font-size: 1.2rem;">{{this.name}}</span>
             <span style="font-size: 0.4rem;">{{this.date}}</span>
           </div>
 
-          <div class="col-1 border d-flex justify-content-center">
+          <div class="col-1 d-flex justify-content-end">
             <span>{{this.amount}}</span>
           </div>
 
-          <div class="col-4 border d-flex justify-content-end px-2">
-            <a href="/records/{{this._id}}/edit" class="mx-2 btn btn-outline-primary btn-sm">修改</a>
+          <div class="col-4 d-flex justify-content-end px-2">
+            <a href="/records/{{this._id}}/edit" class="btn btn-outline-dark btn-sm" style="border: none">修改</a>
             <form action="/records/{{ this._id }}?_method=DELETE" method="POST">
-              <button type="submit" class="mx-2 btn btn-outline-primary btn-sm">刪除</button>
+              <button type="submit" class="mx-2 btn btn-outline-dark btn-sm" style="border: none">刪除</button>
             </form>
           </div>
         </div>

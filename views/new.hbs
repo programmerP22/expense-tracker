@@ -1,80 +1,78 @@
 
 
 <div class="container mt-3">
-  
   <form action="/records" method="POST">
-  
-  <div class="row mt-4 mb-4 gx-0">
-    <div class="col-4 d-flex justify-content-end align-items-center px-3">
-      <span style="font-size: 0.8rem;">*必填欄位</span>
-    </div>
-    <div class="col-4 d-flex justify-content-center px-3">
-      <span>請輸入你的支出</span>
-    </div>
-    <div class="col-4">
-    </div>
-  </div>
-  
-  <div class="row mb-4 gx-0">
-    <div class="col-4 d-flex justify-content-end px-4">
-      <label for="name" class="col-form-label">名稱* :</label>
-    </div>
-    <div class="col-4 d-flex justify-content-center px-2">
-      <input type="text" id="name" name="name" class="form-control" placeholder="ex: 吃飯" required>
-    </div>
-    <div class="col-4">
-    </div>
-  </div>
 
-  <div class="row mb-4 gx-0">
-    <div class="col-4 d-flex justify-content-end px-4">
-      <label for="date" class="col-form-label">日期* :</label>
+    <div class="row mt-4 mb-4 gx-0">
+      <div class="col-4 d-flex justify-content-end align-items-center px-3">
+        <span style="font-size: 0.8rem;">*必填欄位</span>
+      </div>
+      <div class="col-4 d-flex justify-content-center px-3">
+        <span>請輸入你的支出</span>
+      </div>
+      <div class="col-4">
+      </div>
     </div>
-    <div class="col-4 d-flex justify-content-center px-2">
-      <input type="date" id="date"name="date" max="2299-12-31" min="1900-01-01"  class="form-control" required>
+    
+    <div class="row mb-4 gx-0">
+      <div class="col-4 d-flex justify-content-end px-4">
+        <label for="name" class="col-form-label">名稱* :</label>
+      </div>
+      <div class="col-4 d-flex justify-content-center px-2">
+        <input type="text" id="name" name="name" class="form-control" placeholder="ex: 吃飯" required>
+      </div>
+      <div class="col-4">
+      </div>
     </div>
-    <div class="col-4">
-    </div>
-  </div>
 
-  <div class="row mb-4 gx-0">
-    <div class="col-4 d-flex justify-content-end px-4">
-      <label for="categoryId" class="col-form-label">類別* :</label>
+    <div class="row mb-4 gx-0">
+      <div class="col-4 d-flex justify-content-end px-4">
+        <label for="date" class="col-form-label">日期* :</label>
+      </div>
+      <div class="col-4 d-flex justify-content-center px-2">
+        <input type="date" id="date"name="date" max="2299-12-31" min="1900-01-01"  class="form-control" required>
+      </div>
+      <div class="col-4">
+      </div>
     </div>
-    <div class="col-4 d-flex justify-content-center px-2">
-      <select class="form-control" id="categoryId" name="categoryId" required>
-        <option selected disabled value="">請選擇類別</option>
-        {{!-- 請選擇類別 --}}
-        {{#each categoryList}}
-        <option value="{{this._id}}">{{this.name}}</option>
-        {{/each}}
-      </select>
-    </div>
-    <div class="col-4">
-    </div>
-  </div>
 
-  <div class="row mb-4 gx-0">
-    <div class="col-4 d-flex justify-content-end px-4">
-      <label for="amount" class="col-form-label">金額* :</label>
+    <div class="row mb-4 gx-0">
+      <div class="col-4 d-flex justify-content-end px-4">
+        <label for="categoryId" class="col-form-label">類別* :</label>
+      </div>
+      <div class="col-4 d-flex justify-content-center px-2">
+        <select class="form-control" id="categoryId" name="categoryId" required>
+          <option selected disabled value="">請選擇類別</option>
+          {{!-- 請選擇類別 --}}
+          {{#each categoryList}}
+          <option value="{{this._id}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-4">
+      </div>
     </div>
-    <div class="col-4 d-flex justify-content-center px-2">
-      <input type="number" id="amount" name="amount" class="form-control" min="0" placeholder="輸入金額" required>
-    </div>
-    <div class="col-4">
-    </div>
-  </div>
 
-  
-  <div class="row mb-4 gx-0">
-    <div class="col-4 d-flex justify-content-end px-4">
+    <div class="row mb-4 gx-0">
+      <div class="col-4 d-flex justify-content-end px-4">
+        <label for="amount" class="col-form-label">金額* :</label>
+      </div>
+      <div class="col-4 d-flex justify-content-center px-2">
+        <input type="number" id="amount" name="amount" class="form-control" min="0" max="999999999999" placeholder="輸入金額" required>
+      </div>
+      <div class="col-4">
+      </div>
     </div>
-    <div class="col-4 d-flex justify-content-center px-2">
-      <button type="submit" class="btn btn-outline-secondary" style="width: 100%">確認新增</button>
+    
+    <div class="row mb-4 gx-0">
+      <div class="col-4 d-flex justify-content-end px-4">
+      </div>
+      <div class="col-4 d-flex justify-content-center px-2">
+        <button type="submit" class="btn btn-outline-secondary" style="width: 100%">確認新增</button>
+      </div>
+      <div class="col-4">
+      </div>
     </div>
-    <div class="col-4">
-    </div>
-  </div>
 
   </form>
 </div>
