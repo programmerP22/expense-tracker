@@ -57,8 +57,10 @@
           </div>
 
           <div class="col-4 border d-flex justify-content-end px-2">
-            <a href="/records/{{this._id}}/edit" class="mx-2">修改</a>
-            <a href="#" class="mx-2">刪除</a>
+            <a href="/records/{{this._id}}/edit" class="mx-2 btn btn-outline-primary btn-sm">修改</a>
+            <form action="/records/{{ this._id }}?_method=DELETE" method="POST">
+              <button type="submit" class="mx-2 btn btn-outline-primary btn-sm">刪除</button>
+            </form>
           </div>
         </div>
         {{/each}}

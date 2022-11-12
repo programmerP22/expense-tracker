@@ -94,7 +94,6 @@ app.get('/records/new', (req, res) => {
 //要再改userId的設定
 app.post('/records', (req, res) => {
   const newRecord = req.body
-  console.log(newRecord)
   newRecord.userId = "636e7dd337bf29d3eea1c3f8"
   Record.create(newRecord)
     .then(() => res.redirect('/'))
@@ -139,6 +138,17 @@ app.put('/records/:id', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(err => console.log(err))
 })
+
+app.delete('/records/:id', (req, res) => {
+  const id = req.params.id
+  const userId = "636e7dd337bf29d3eea1c3f8"
+  // return Record.findOne(id, userId)
+  return Record.findById(id)
+    .then(record => record.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 
 
 app.listen('3000', () => {
