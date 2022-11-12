@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 const Category = require('../category')
 // const categoryList = require('./category.json')
 const User = require('../user')
@@ -70,7 +71,12 @@ db.once('open', () => {
     ,
     Promise.all(
     userList.map((user, userIndex) => {
-      return User.create(user)
+      const { name, email, password, recordIndex } = user
+      return User.create({
+        name,
+        email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      })
         .then(user => {
           const userRecord = []
           recordList.forEach((record, recordIndex) => {
