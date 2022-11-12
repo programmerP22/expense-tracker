@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
             res.render('index', { records, totalAmount, categoryList })
           })
       } else {
-        // sort function
+        //根據「類別」篩選支出
         let categoryType = ''
         Promise.all([
           Category.find({_id: categoryId})
