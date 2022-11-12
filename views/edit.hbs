@@ -1,6 +1,6 @@
 <div class="container mt-3">
 
-  <form action="/" method="POST">
+  <form action="/records/{{ record._id }}?_method=PUT" method="POST">
 
     <div class="row mt-4 mb-4 gx-0">
       <div class="col-4 d-flex justify-content-end align-items-center px-3">
@@ -18,8 +18,7 @@
         <label for="name" class="col-form-label">名稱* :</label>
       </div>
       <div class="col-4 d-flex justify-content-center px-2">
-        <input type="text" id="name" name="name" class="form-control" aria-describedby="passwordHelpInline"
-          placeholder="ex: 吃飯">
+        <input type="text" id="name" name="name" class="form-control" placeholder="ex: 吃飯" value="{{record.name}}" required>
       </div>
       <div class="col-4">
       </div>
@@ -30,7 +29,7 @@
         <label for="date" class="col-form-label">日期* :</label>
       </div>
       <div class="col-4 d-flex justify-content-center px-2">
-        <input type="date" id="date" name="date" max="2299-12-31" min="1900-01-01" class="form-control">
+        <input type="date" id="date" name="date" max="2299-12-31" min="1900-01-01" class="form-control" value="{{record.date}}" required>
       </div>
       <div class="col-4">
       </div>
@@ -38,15 +37,14 @@
 
     <div class="row mb-4 gx-0">
       <div class="col-4 d-flex justify-content-end px-4">
-        <label for="category" class="col-form-label">類別* :</label>
+        <label for="categoryId" class="col-form-label">類別* :</label>
       </div>
       <div class="col-4 d-flex justify-content-center px-2">
-        <select class="form-control" id="category" name="category">
-          <option value="All">請選擇類別</option>
-          <option value="111">111</option>
-          <option value="222">222</option>
+        <select class="form-control" id="categoryId" name="categoryId" required>
+          <option value="{{record.categoryId}}">{{categoryType}}</option>
+          {{!-- 請選擇類別 --}}
           {{#each categoryList}}
-          <option value="{{this.name}}">{{this.name}}</option>
+          <option value="{{this._id}}">{{this.name}}</option>
           {{/each}}
         </select>
       </div>
@@ -59,7 +57,7 @@
         <label for="amount" class="col-form-label">金額* :</label>
       </div>
       <div class="col-4 d-flex justify-content-center px-2">
-        <input type="number" id="amount" name="amount" class="form-control" placeholder="輸入金額">
+        <input type="number" id="amount" name="amount" class="form-control" min="0" placeholder="輸入金額" value="{{record.amount}}"" required>
       </div>
       <div class="col-4">
       </div>
@@ -70,7 +68,7 @@
       <div class="col-4 d-flex justify-content-end px-4">
       </div>
       <div class="col-4 d-flex justify-content-center px-2">
-        <button type="submit" class="btn btn-outline-secondary" style="width: 100%">新增支出</button>
+        <button type="submit" class="btn btn-outline-secondary" style="width: 100%">確認修改</button>
       </div>
       <div class="col-4">
       </div>

@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const Record = require('./models/record')
 const dayjs = require('dayjs')
 
@@ -19,7 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express()
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
 
 const db = mongoose.connection
 
@@ -34,12 +35,10 @@ db.once('open', () => {
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 
 app.get('/', (req, res) => {
-  const reqs = req.query
-  console.log(reqs)
-
   const categoryId = req.query.categoryId
   Category.find()
   .lean()
@@ -101,6 +100,46 @@ app.post('/records', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(err => console.log(err))
 })
+
+//進到修改頁面
+app.get('/records/:id/edit', (req, res) => {
+  // const userId = req.user._id
+  const userId = "636e7dd337bf29d3eea1c3f8"
+  const _id = req.params.id
+  let categoryType = ''
+  let categoryList = []
+  return Promise.all([
+    Record.findOne({ _id, userId }).lean(),
+    Category.find().lean()
+  ])
+    .then(([record, categoryListData]) => {
+      record.date = dayjs(record.date).format('YYYY-MM-DD')
+      categoryListData.forEach((category) => {
+        if (category._id.toString() !== record.categoryId.toString()){
+          categoryList.push(category)
+        } else {
+          categoryType = category.name
+        }
+      })
+      return res.render('edit', { record, categoryList, categoryType })
+    })
+    .catch(error => console.log(error))
+})
+
+
+
+//修改功能
+app.put('/records/:id', (req, res) => {
+  const _id = req.params.id
+  const { name, date, categoryId, amount } = req.body
+  // const userId = req.user._id 先用下面的
+  const userId = "636e7dd337bf29d3eea1c3f8"
+
+  Record.findByIdAndUpdate({ _id, userId }, { name, date, categoryId, amount })
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
+})
+
 
 app.listen('3000', () => {
   console.log('App is running on http://localhost:3000')
