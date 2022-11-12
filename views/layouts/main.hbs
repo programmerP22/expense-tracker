@@ -11,7 +11,17 @@
 <body>
   <nav class="navbar px-4" style="background: #D4D4D4">
     <div class="container-fluid">
-      <a href='/' class="navbar-brand fw-bold">家庭記事本</a>
+      <a href='/' class="navbar-brand fw-bold">
+      {{#if isAuthenticated}}
+      {{#if user.name}}
+      {{user.name}}的家庭記事本
+      {{else}}
+      家庭記事本
+      {{/if}}
+      {{else}}
+      家庭記事本
+      {{/if}}
+      </a>
       <a href='/users/logout' class="btn btn-outline-dark" style="color: orange;" type="submit">登出</a>
     </div>
   </nav>
