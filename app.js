@@ -227,7 +227,10 @@ app.get('/users/register', (req, res) => {
   res.render('register')
 })
 
-
+app.get('/users/logout', (req, res) => {
+  req.logout()
+  res.redirect('/users/login')
+})
 
 
 
