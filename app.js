@@ -6,7 +6,6 @@ const methodOverride = require('method-override')
 const Record = require('./models/record')
 const dayjs = require('dayjs')
 
-// const categoryList = require('./models/seeds/category')
 
 
 
@@ -175,10 +174,40 @@ app.delete('/records/:id', (req, res) => {
 
 
 // users
-app.get('/login', (req, res) => {
+app.get('/users/login', (req, res) => {
   res.render('login')
 })
 
+app.post('/users/register', (req, res) => {
+  const { name, email, password, confirmPassword } = req.body
+  // 檢查使用者是否已經註冊
+  User.findOne({ email }).then(user => {
+    // 如果已經註冊：退回原本畫面
+    if (user) {
+      console.log('User already exists.')
+      res.render('register', {
+        name,
+        email,
+        password,
+        confirmPassword
+      })
+    } else {
+      // 如果還沒註冊：寫入資料庫
+      return User.create({
+        name,
+        email,
+        password
+      })
+        .then(() => res.redirect('/'))
+        .catch(err => console.log(err))
+    }
+  })
+    .catch(err => console.log(err))
+})
+
+app.get('/users/register', (req, res) => {
+  res.render('register')
+})
 
 
 
