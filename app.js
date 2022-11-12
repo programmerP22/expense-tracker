@@ -4,15 +4,17 @@ const mongoose = require('mongoose')
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+
+const usePassport = require('./config/passport')
+const passport = require('passport')
+
+
 const Record = require('./models/record')
 const dayjs = require('dayjs')
 
-
-
-
 const Category = require('./models/category')
 const User = require('./models/user');
-const record = require('./models/record');
+// const record = require('./models/record');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -43,6 +45,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
+usePassport(app)
 //home page
 app.get('/', (req, res) => {
   const categoryId = req.query.categoryId
@@ -184,6 +187,14 @@ app.delete('/records/:id', (req, res) => {
 app.get('/users/login', (req, res) => {
   res.render('login')
 })
+
+app.post('/users/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/users/login'
+}))
+
+
+
 
 app.post('/users/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
